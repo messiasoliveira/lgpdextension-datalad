@@ -1,0 +1,54 @@
+{
+    "ofuscation": {
+        "publicKey": "",
+        "privateKey": ""
+    },
+    "tokenization": {
+        "publicKey": ""
+    },
+    "columns": {
+        "Name": {
+            "enable": "true",
+            "actions": "tokenization",
+            "operations": {
+                "upper": "true"
+            }
+        },
+        "Age": {
+            "enable": "true",
+            "actions": "ofuscation",
+            "operations": {
+                "toInt": "true",
+                "range": {"0-18":0,"19-25":1,"26-60":2,"61-130":3}
+            }
+        },
+        "Gender": {
+            "enable": "true",
+            "actions": "ofuscation",
+            "operations": {
+                "lower": "true",
+                "json":{"masculino":0,"m":0,"feminino":1}
+            }
+        },
+        "Price": {
+            "enable": "true",
+            "operations": {
+                "toFloat": "true",
+                "toPrice": "BR"
+            }
+        },
+        "DtNascimento": {
+            "enable": "true",
+            "operations": {
+                "toDate": "BR"
+            }
+        },
+        "CreatedDate": {
+            "enable": "true",
+            "operations": {
+                "toDatetime": "false"
+            }
+        }
+    },
+    "_version":"1.0.0-beta"
+}
