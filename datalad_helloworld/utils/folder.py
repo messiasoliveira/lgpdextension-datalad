@@ -13,8 +13,9 @@ class Folder:
         return os.getcwd()
     @classmethod
     def updatevalue(self,element):
-        element.obj[element.key] = element.value
-        return element
+        js = element["obj"]
+        js[element["key"]] = element["value"]
+        return js
     def read(self):
         content = ""
         with open(self.path, 'r') as openfile:
