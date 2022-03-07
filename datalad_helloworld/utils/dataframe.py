@@ -10,54 +10,51 @@ class Dataframe:
         self.dataframe = dataframe
         self.colname = colname
         self.date_format = {"BR":"%d/%m/%y","US":"%m/%d/%y","CN":"%y/%m/%d"}
-        self.price_format = {"BR":"${:.,2f}","US":"${:,.2f}"}
-    
+        self.price_format = {"BR":"{:.,2f}","US":"{:,.2f}"}
     def encrypt(self,colname):
         lgr.info("Encrypt to " + self.colname)
         self.dataframe[colname].apply(self.cryptoObj.encrypt)
-    
     def decrypt(self,colname):
         lgr.info("Decrypt to " + self.colname)
         self.dataframe[colname].apply(self.cryptoObj.decrypt)    
-
     def upper(self):
         lgr.info("Upper to " + self.colname)
         self.dataframe[self.colname] = self.dataframe[self.colname].str.upper()
-    
     def lower(self):
         lgr.info("Lower to " + self.colname)
         self.dataframe[self.colname] = self.dataframe[self.colname].str.lower()
-    
     def toInt(self):
         lgr.info("toInt to " + self.colname)
         self.dataframe[self.colname] = self.dataframe[self.colname].astype(int)
-    
     def toFloat(self):
         lgr.info("toFloat to " + self.colname)
         self.dataframe[self.colname] = self.dataframe[self.colname].astype(float)
-    
     def toNumeric(self):
         lgr.info("toNumeric to " + self.colname)
         self.dataframe[self.colname] = pd.to_numeric(self.dataframe[self.colname])
-
-    def toPrice(self,format="BR"):
+    def toPrice(self,format):
         lgr.info("toPrice to " + self.colname + " - format to " + format)
         self.dataframe[self.colname] = self.dataframe[self.colname].map(self.price_format.get(format,format).format)
-    
-    def toDate(self,format="BR"):
+    def toDate(self,format):
         lgr.info("toDate to " + self.colname + " - format to " + format)
-        self.dataframe[self.colname] = self.dataframe[self.colname].dt.strftime(self.date_format.get(format,format))
-    
+        self.dataframe[self.colname] = pd.to_datetime(self.dataframe[self.colname],format=format)
+    def toString(self):
+        lgr.info("toString to " + self.colname)
+        self.dataframe[self.colname] = self.dataframe[self.colname].astype(str)
     def json(self,text):
         lgr.info("json to " + self.colname + " - " + text)
+        self.toString()
         self.dataframe[self.colname] = self.dataframe[self.colname].map(text)
-
-    def range_numeric(self,text):
-        lgr.info("range_numeric to " + self.colname + " - " + text)
+    def rangeNumeric(self,text):
+        lgr.info("range_numeric to " + self.colname + " - " + text)   
         values = {}
-        for i in text.keys():
+        for i in list(text.keys()):
+            value = text[i]
             key = i.split("-")
             nums = [str(i) for i in range(int(key[0]),int(key[1])+1)]
-            for j,_ in enumerate(nums):
-                values.update(dict(zip(nums[j::], str(text[i]))))
+            for j in nums:
+                values[j] = pd.to_numeric(value)
         self.json(values)
+    @property
+    def dataframe(self):
+        return self.dataframe

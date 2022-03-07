@@ -1,47 +1,46 @@
 import pandas as pd
 import logging
+
 lgr = logging.getLogger('datalad.helloworld.hello_cmd.writers.csv')
 
 class Csv:
     def __init__(self, settings):
-        self.settings = settings 
-
+        self.settings = settings
     def read(self):
         lgr.info("Reading csv file ",self.settings)
-        if self.settings.get("header",None):
+        if self.settings.get("header","None") != "None":
             return pd.read_csv(
                 self.settings.path,
                 sep=self.settings.separator,
                 header=self.settings.header
                 )
-        elif self.settings.get("usecols",None):
+        elif self.settings.get("names",[]) != []:
             return pd.read_csv(
                 self.settings.path,
                 sep=self.settings.separator,
-                usecols=self.settings.usecols
+                names=self.settings.names
                 )
         else:
             return pd.read_csv(
                 self.settings.path,
                 sep=self.settings.separator
                 )
-    
-    def write(self):
+    def write(self, dataframe:pd.DataFrame):
         lgr.info("Writing csv file ",self.settings)
-        if self.settings.get("header",None):
-            return pd.DataFrame.to_csv(
+        if self.settings.get("header","None") != "None":
+            return dataframe.to_csv(
                 path_or_buf=self.settings.path,
                 sep=self.settings.separator,
                 header=self.settings.header
                 )
-        elif self.settings.get("header",None):
-            return pd.DataFrame.to_csv(
+        elif self.settings.get("names",[]) != []:
+            return dataframe.to_csv(
                 path_or_buf=self.settings.path,
                 sep=self.settings.separator,
-                columns=self.settings.usecols
+                columns=self.settings.names
                 )
         else:
-            return pd.DataFrame.to_csv(
+            return dataframe.to_csv(
                 path_or_buf=self.settings.path,
                 sep=self.settings.separator
                 )

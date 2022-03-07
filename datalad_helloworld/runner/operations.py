@@ -6,14 +6,12 @@ lgr = logging.getLogger('datalad.helloworld.hello_cmd.runner.operations')
 class Operations:
     def __init__(self, dataframe:Dataframe):
         self.dataframe:Dataframe = dataframe
-
     def run(self, settings):
         lgr.info("run to " + settings)
         operations = [x for x in settings.keys()]
         for op in operations:
-            self.select(op)
-
-    def select(self,operation):
+            self.select(op,settings[op])
+    def select(self,operation,value):
         lgr.info("select to " + operation)
         switch = {
             "upper":self.dataframe.upper(),
@@ -24,10 +22,9 @@ class Operations:
             "toPrice":self.dataframe.toPrice(),
             "toDate":self.dataframe.toDate(),
             "json":self.dataframe.json(),
-            "range_numeric":self.dataframe.range_numeric()
+            "rangeNumeric":self.dataframe.rangeNumeric(value)
         }
         switch.get(operation,None)
-    
     @property
     def dataframe(self):
         return self.dataframe

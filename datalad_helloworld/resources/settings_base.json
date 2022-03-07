@@ -6,6 +6,15 @@
     "tokenization": {
         "publicKey": ""
     },
+    "format":"",
+    "path":"",
+    "file":{
+        "format":"",
+        "separator":"",
+        "names":[],
+        "header":"0 | None",
+        "path":""
+    },
     "columns": {
         "Name": {
             "enable": "true",
@@ -19,7 +28,7 @@
             "actions": "ofuscation",
             "operations": {
                 "toInt": "true",
-                "range": {"0-18":0,"19-25":1,"26-60":2,"61-130":3}
+                "rangeNumeric": {"0-18":0,"19-25":1,"26-60":2,"61-130":3}
             }
         },
         "Gender": {

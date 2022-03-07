@@ -12,7 +12,7 @@ class Actions:
         self.colname = colname
         self.dataframe:pd.DataFrame = dataframe
         self.settings = settings
-
+        self.colsettings = settings["columns"][self.colname]
     def run(self, action):
         lgr.info("run to " + action)
         switch = {
@@ -21,7 +21,6 @@ class Actions:
             "anonymation":self.anonymation()
         }
         switch.get(action,None)
-    
     def execute(self,rsa):
         lgr.info("execute to " + rsa)
         print("PUBLICKEY :: " + rsa.publickey())
@@ -31,31 +30,25 @@ class Actions:
         opobj.run(self.settings["columns"][self.colname]["operations"])
         opobj.dataframe.encrypt(self.colname)
         dfutils.write(self.dataframe,self.settings)
-    
     def tokenization(self):
         lgr.info("tokenization action")
         rsa = Rsa()
         self.settings["tokenization"] = rsa.tokenization(self.settings.get("tokenization",{}))
         self.execute(rsa)
-        
-    
     def ofuscation(self):
         lgr.info("ofuscation action")
         rsa = Rsa()
         self.settings["ofuscation"] = rsa.ofuscation(self.settings.get("ofuscation",{}))
         self.execute(rsa)
-
     def anonymation(self):
         lgr.info("anonymation action")
         dfobj = Dataframe(self.dataframe,None,self.colname)
         opobj = Operations(dfobj)
-        opobj.run()
+        opobj.run(self.colsettings["operations"])
         dfutils.write(self.dataframe,self.settings)
-    
     @property
     def settings(self):
         return self.settings
-
     @property
     def dataframe(self):
         return self.dataframe
