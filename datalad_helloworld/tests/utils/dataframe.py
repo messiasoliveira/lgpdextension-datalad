@@ -29,8 +29,8 @@ class TestDataframe(unittest.TestCase):
         df = pd.DataFrame(self.dataframe)
         name = df.get(self.colname).iloc[0]
         dfutils = Dataframe(df,rsa,self.colname)
-        dfutils.encrypt(self.colname)
-        dfutils.decrypt(self.colname)
+        dfutils.encrypt()
+        dfutils.decrypt()
         name_w_crypto = dfutils.dataframe.get(self.colname).iloc[0]
         self.assertEqual(name,name_w_crypto)
     def test_upper(self):

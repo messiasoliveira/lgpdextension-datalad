@@ -5,18 +5,18 @@ from datalad_helloworld.crypto.rsa import Rsa
 lgr = logging.getLogger('datalad.helloworld.hello_cmd.utils.dataframe')
 
 class Dataframe:
-    def __init__(self, dataframe:pd.DataFrame,rsa:Rsa,colname):
+    def __init__(self, dataframe,rsa,colname):
         self.cryptoObj = rsa
-        self.dataframe = dataframe
+        setattr(Dataframe, 'dataframe', dataframe)
         self.colname = colname
         self.date_format = {"BR":"%d/%m/%y","US":"%m/%d/%y","CN":"%y/%m/%d"}
         self.price_format = {"BR":"{:.,2f}","US":"{:,.2f}"}
-    def encrypt(self,colname):
+    def encrypt(self):
         lgr.info("Encrypt to " + self.colname)
-        self.dataframe[colname].apply(self.cryptoObj.encrypt)
-    def decrypt(self,colname):
+        self.dataframe[self.colname] = self.dataframe[self.colname].apply(self.cryptoObj.encrypt)
+    def decrypt(self):
         lgr.info("Decrypt to " + self.colname)
-        self.dataframe[colname].apply(self.cryptoObj.decrypt)    
+        self.dataframe[self.colname] = self.dataframe[self.colname].apply(self.cryptoObj.decrypt)    
     def upper(self):
         lgr.info("Upper to " + self.colname)
         self.dataframe[self.colname] = self.dataframe[self.colname].str.upper()
@@ -32,21 +32,21 @@ class Dataframe:
     def toNumeric(self):
         lgr.info("toNumeric to " + self.colname)
         self.dataframe[self.colname] = pd.to_numeric(self.dataframe[self.colname])
-    def toPrice(self,format):
-        lgr.info("toPrice to " + self.colname + " - format to " + format)
-        self.dataframe[self.colname] = self.dataframe[self.colname].map(self.price_format.get(format,format).format)
-    def toDate(self,format):
-        lgr.info("toDate to " + self.colname + " - format to " + format)
-        self.dataframe[self.colname] = pd.to_datetime(self.dataframe[self.colname],format=format)
+    def toPrice(self,value):
+        lgr.info("toPrice to " + self.colname + " - format to " + value)
+        self.dataframe[self.colname] = self.dataframe[self.colname].map(self.price_format.get(value,value).format)
+    def toDate(self,value):
+        lgr.info("toDate to " + self.colname + " - format to " + value)
+        self.dataframe[self.colname] = pd.to_datetime(self.dataframe[self.colname],format=self.date_format.get(value,value))
     def toString(self):
         lgr.info("toString to " + self.colname)
         self.dataframe[self.colname] = self.dataframe[self.colname].astype(str)
     def json(self,text):
-        lgr.info("json to " + self.colname + " - " + text)
+        lgr.info("json to " + self.colname + " - " + str(text))
         self.toString()
         self.dataframe[self.colname] = self.dataframe[self.colname].map(text)
     def rangeNumeric(self,text):
-        lgr.info("range_numeric to " + self.colname + " - " + text)   
+        lgr.info("range_numeric to " + self.colname + " - " + str(text))   
         values = {}
         for i in list(text.keys()):
             value = text[i]

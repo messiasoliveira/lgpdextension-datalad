@@ -1,63 +1,74 @@
 {
     "ofuscation": {
-        "publicKey": "",
-        "privateKey": ""
+        "publicKey": {},
+        "privateKey": {}
     },
     "tokenization": {
-        "publicKey": ""
+        "publicKey": {}
     },
-    "format":"",
-    "path":"",
-    "file":{
-        "format":"",
-        "separator":"",
-        "names":[],
-        "header":"0 | None",
-        "path":""
+    "file": {
+        "format": "parquet",
+        "separator": "",
+        "names": [],
+        "header": "0 | None",
+        "path": "./tests/resources/"
     },
     "columns": {
         "Name": {
             "enable": "true",
             "actions": "tokenization",
             "operations": {
-                "upper": "true"
+                "upper": "true",
+                "encrypt": "true"
             }
         },
         "Age": {
             "enable": "true",
-            "actions": "ofuscation",
+            "actions": "anonymation",
             "operations": {
                 "toInt": "true",
-                "rangeNumeric": {"0-18":0,"19-25":1,"26-60":2,"61-130":3}
+                "rangeNumeric": {
+                    "0-18": 0,
+                    "19-25": 1,
+                    "26-60": 2,
+                    "61-130": 3
+                }
             }
         },
         "Gender": {
             "enable": "true",
-            "actions": "ofuscation",
+            "actions": "anonymation",
             "operations": {
                 "lower": "true",
-                "json":{"masculino":0,"m":0,"feminino":1}
+                "json": {
+                    "masculino": 0,
+                    "m": 0,
+                    "feminino": 1
+                }
             }
         },
         "Price": {
             "enable": "true",
+            "actions": "anonymation",
             "operations": {
                 "toFloat": "true",
                 "toPrice": "BR"
             }
         },
-        "DtNascimento": {
+        "DateBorn": {
             "enable": "true",
+            "actions": "ofuscation",
             "operations": {
-                "toDate": "BR"
+                "toDate": "%Y-%m-%d"
             }
         },
         "CreatedDate": {
             "enable": "true",
+            "actions": "anonymation",
             "operations": {
                 "toDatetime": "false"
             }
         }
     },
-    "_version":"1.0.0-beta"
+    "_version": "1.0.0-beta"
 }

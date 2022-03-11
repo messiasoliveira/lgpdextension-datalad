@@ -12,9 +12,9 @@ class Parquet:
     def read(self):
         lgr.info("Reading parquet file",self.settings)
         if self.settings.get("names",[]) != []:
-            return pd.read_parquet(path=self.settings.path,columns=self.settings.names)
-        return pd.read_parquet(path=self.settings.path)
+            return pd.read_parquet(path=self.settings["path"],columns=self.settings["names"])
+        return pd.read_parquet(path=self.settings["path"])
     
-    def write(self,dataframe:pd.DataFrame):
+    def write(self,dataframe):
         lgr.info("Writing parquet file",self.settings)
-        dataframe.to_parquet(self.settings.path)
+        dataframe.to_parquet(self.settings["path"])

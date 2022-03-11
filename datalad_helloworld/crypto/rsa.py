@@ -9,28 +9,36 @@ class Rsa:
         self.publicKey = None
         self.privateKey = None
     def ofuscation(self,settings):
-        lgr.info("ofuscation to " + settings)
+        lgr.info("ofuscation to " + str(settings))
         if not settings.get("publicKey",None) or not settings.get("privateKey",None):
             self.setkeys()
-        settings = self.updatefile(settings,"publicKey",self.publicKey)
-        settings = self.updatefile(settings,"privateKey",self.privateKey)
+        elif settings.get("publicKey",None) and settings.get("privateKey",None):
+            pub = settings["publicKey"]
+            pri = settings["private"]
+            self.publicKey = rsa.PublicKey(pub["n"],pub["e"])
+            self.privateKey = rsa.PrivateKey(pri["n"],pri["e"],pri["d"],pri["p"],pri["q"])
+        settings = self.updatefile(settings,"publicKey",{"n":self.publicKey.n,"e":self.publicKey.e})
+        settings = self.updatefile(settings,"privateKey",{"n":self.privateKey.n,"e":self.privateKey.e,"d":self.privateKey.d,"p":self.privatekey.p,"q":self.privateKey.q})
         return settings
     def tokenization(self,settings):
-        lgr.info("tokenization to " + settings)
+        lgr.info("tokenization to " + str(settings))
         if not settings.get("publicKey",None):
-            self.publicKey = settings.get("publicKey",self.setpublickey())
-        settings = self.updatefile(settings,"publicKey",self.publicKey)
+            self.setpublickey()
+        elif settings.get("publicKey",None):
+            pub = settings["publicKey"]
+            self.publicKey = rsa.PublicKey(pub["n"],pub["e"])
+        settings = self.updatefile(settings,"publicKey",{"n":self.publicKey.n,"e":self.publicKey.e})
         return settings
     def encrypt(self,text):
         lgr.info("encrypt to " + text)
         if self.publicKey:
             return rsa.encrypt(text.encode(),self.publicKey)
-        return text
+        return False
     def decrypt(self,text):
-        lgr.info("decrypt to " + text)
+        lgr.info("decrypt to " + str(text))
         if self.privateKey:
             return rsa.decrypt(text, self.privateKey).decode()
-        return text
+        return False
     def generate(self):
         lgr.info("generate keys")
         publicKey,privateKey = rsa.newkeys(512)
@@ -41,9 +49,9 @@ class Rsa:
     def setkeys(self):
         lgr.info("setkeys keys")
         self.publicKey,self.privateKey = self.generate()
-    def updatefile(self,settings):
-        lgr.info("updatefile to " + settings)
-        return Folder().updatevalue({"obj":settings,"key":self.key,"value":self.publicKey})
+    def updatefile(self,settings,key,value):
+        lgr.info("updatefile to " + str(settings))
+        return Folder().updatevalue({"obj":settings,"key":key,"value":value})
     @property
     def publickey(self):
         return self.publicKey

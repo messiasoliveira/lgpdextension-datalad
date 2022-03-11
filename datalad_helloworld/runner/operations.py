@@ -5,26 +5,36 @@ lgr = logging.getLogger('datalad.helloworld.hello_cmd.runner.operations')
 
 class Operations:
     def __init__(self, dataframe:Dataframe):
-        self.dataframe:Dataframe = dataframe
+        setattr(Operations, 'dataframe', dataframe)
     def run(self, settings):
-        lgr.info("run to " + settings)
+        lgr.info("run to " + str(settings))
         operations = [x for x in settings.keys()]
         for op in operations:
             self.select(op,settings[op])
     def select(self,operation,value):
         lgr.info("select to " + operation)
-        switch = {
-            "upper":self.dataframe.upper(),
-            "lower":self.dataframe.lower(),
-            "toInt":self.dataframe.toInt(),
-            "toFloat":self.dataframe.toFloat(),
-            "toNumeric":self.dataframe.toNumeric(),
-            "toPrice":self.dataframe.toPrice(),
-            "toDate":self.dataframe.toDate(),
-            "json":self.dataframe.json(),
-            "rangeNumeric":self.dataframe.rangeNumeric(value)
-        }
-        switch.get(operation,None)
+        if operation == "upper":
+            self.dataframe.upper(),
+        elif operation == "lower":
+            self.dataframe.lower(),
+        elif operation == "toInt":
+            self.dataframe.toInt(),
+        elif operation == "toFloat":
+            self.dataframe.toFloat(),
+        elif operation == "toNumeric":
+            self.dataframe.toNumeric(),
+        elif operation == "toPrice":
+            self.dataframe.toPrice(value),
+        elif operation == "toDate":
+            self.dataframe.toDate(value),
+        elif operation == "json":
+            self.dataframe.json(),
+        elif operation == "rangeNumeric":
+            self.dataframe.rangeNumeric(value)
+        elif operation == "encrypt":
+            self.dataframe.encrypt()
+        elif operation == "decrypt":
+            self.dataframe.decrypt() 
     @property
     def dataframe(self):
         return self.dataframe

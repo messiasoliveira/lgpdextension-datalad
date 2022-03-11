@@ -6,7 +6,7 @@ from datalad_helloworld.utils.folder import Folder
 class TestFolder(unittest.TestCase):
     def __init__(self,*args,**kwargs):
         unittest.TestCase.__init__(self,*args,**kwargs)
-        self.path = "./resources/settings_base.json"
+        self.path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/settings_base.json"
     def test_current(self):
         res = Folder.getcurrent()
         self.assertIsNotNone(res)
