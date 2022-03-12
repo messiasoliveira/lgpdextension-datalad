@@ -4,14 +4,17 @@
         "privateKey": {}
     },
     "tokenization": {
-        "publicKey": {}
+        "publicKey": {
+            "n": 9773833792069234959917662987260087091314402875974512808322764408744956538100254900249834625089256961436571415573234920927958082902027654512861528138381557,
+            "e": 65537
+        }
     },
     "file": {
         "format": "parquet",
         "separator": "",
         "names": [],
         "header": "0 | None",
-        "path": "./tests/resources/"
+        "path": "C:\\Users\\messi\\repository\\bkpextension_datalad/datalad_helloworld/tests/resources/test_tokenization.parquet"
     },
     "columns": {
         "Name": {

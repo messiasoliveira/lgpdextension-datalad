@@ -8,12 +8,13 @@ class TestActions(unittest.TestCase):
         unittest.TestCase.__init__(self,*args,**kwargs)
         self.df = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18],"DateBorn":["2020-01-02","2020-04-02","2021-01-02","2022-01-02"]}  
         self.operations = {"upper": "true"}
-        self.settings = Folder(f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/settings_base.json").read()
+        self.filepath = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/settings_base.json"
+        self.settings = Folder(self.filepath).read()
     def test_tokenization(self):
         dfa = pd.DataFrame(self.df)
         path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/test_tokenization.parquet"
         self.settings["file"]["path"] = path
-        act = Actions("Name",self.settings,dfa)
+        act = Actions("Name",self.settings,dfa,self.filepath)
         act.tokenization()
         res = act.dataframe
         self.assertTrue(isinstance(res,pd.DataFrame))
@@ -21,7 +22,7 @@ class TestActions(unittest.TestCase):
         dfa = pd.DataFrame(self.df)
         path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/test_ofuscation.parquet"
         self.settings["file"]["path"] = path
-        act = Actions("DateBorn",self.settings,dfa)
+        act = Actions("DateBorn",self.settings,dfa,self.filepath)
         act.ofuscation()
         res = act.dataframe
         self.assertTrue(isinstance(res,pd.DataFrame))
@@ -29,7 +30,7 @@ class TestActions(unittest.TestCase):
         dfa = pd.DataFrame(self.df)
         path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/test_anonymation.parquet"
         self.settings["file"]["path"] = path
-        act = Actions("Age",self.settings,dfa)
+        act = Actions("Age",self.settings,dfa,self.filepath)
         act.anonymation()
         res = act.dataframe
         self.assertTrue(isinstance(res,pd.DataFrame))

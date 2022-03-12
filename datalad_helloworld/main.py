@@ -11,7 +11,7 @@ lgr = logging.getLogger('datalad.helloworld.hello_cmd.writers.dataframe')
 class Main:
     def __init__(self,filename=f"{Folder().getcurrent()}/_settings.json"):
         self.filename = filename
-    def update_file(self,settings={}):
+    def update_file(self,settings):
         defauld_field = "Added the '{{FIELD}} field'. YOU NEED TO CONFIGURE THE '{{FIELD}} FIELD' FROM SETTINGS JSON."
         msgs = ""
         if settings.get("ofuscation",None):
@@ -40,7 +40,7 @@ class Main:
         return settings
     def run(self):
         if not Folder(self.filename).exists():
-            settings = self.update_file()
+            settings = self.update_file(dict())
         else:
             fld = Folder(self.filename)
             settings = self.update_file(fld.read())
