@@ -9,7 +9,7 @@ class TestDataframe(unittest.TestCase):
         self.settings_csv = {"file":{"format":"csv","separator":";","names":[],"header":0,"path":self.path+"w_names.csv"}}
         self.settings_parquet = {"file":{"format":"parquet","path":self.path+"exists.parquet"}}
         self.settings_none = {"file":{"format":"","path":self.path+"exists.parquet"}}
-        self.dataframe = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18]}
+        self.dataframe = {'Name': ['Tom', 'Joseph', 'Krish', 'John'], 'Age': [20, 21, 19, 18], 'Price': [1.4,2.4,3.5,1.9], 'DateBorn': ['2022-03-03','2022-06-03','2022-04-12','2022-03-21']}
     def test_read_none(self):
         res = Dataframe().read(self.settings_none)
         self.assertTrue(res == None)

@@ -8,11 +8,12 @@ from datalad_helloworld.utils.folder import Folder
 lgr = logging.getLogger('datalad.helloworld.hello_cmd.runner.actions')
 
 class Actions:
-    def __init__(self,colname,settings,df):
+    def __init__(self,colname,settings,df,settingspath):
         self.colname = colname
         setattr(Actions, 'dataframe', df)
         setattr(Actions, 'settings', settings)
         self.colsettings = settings["columns"][colname]
+        self.filenamesettings = settingspath
     def run(self, action):
         lgr.info("run to " + str(action))
         switch = {
@@ -29,7 +30,7 @@ class Actions:
         opobj = Operations(dfobj)
         opobj.run(self.settings["columns"][self.colname]["operations"])
         dfutils().write(opobj.dataframe.dataframe,self.settings)
-        return self.settings
+        
     def tokenization(self):
         lgr.info("tokenization action")
         rsa = Rsa()

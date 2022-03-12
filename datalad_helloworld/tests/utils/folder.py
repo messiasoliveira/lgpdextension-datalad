@@ -11,7 +11,7 @@ class TestFolder(unittest.TestCase):
         res = Folder.getcurrent()
         self.assertIsNotNone(res)
     def test_update_value(self):
-        res = Folder().updatevalue(element={"obj":{"name","test"},"key":"name","value":"test1"})
+        res = Folder().updatevalue({"obj":{"name":"test"},"key":"name","value":"test1"})
         self.assertTrue(res["name"] == "test1")
     def test_read(self):
         res = Folder(self.path).read()

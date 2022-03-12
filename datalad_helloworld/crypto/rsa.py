@@ -30,7 +30,7 @@ class Rsa:
         settings = self.updatefile(settings,"publicKey",{"n":self.publicKey.n,"e":self.publicKey.e})
         return settings
     def encrypt(self,text):
-        lgr.info("encrypt to " + text)
+        lgr.info("encrypt to " + str(text))
         if self.publicKey:
             return rsa.encrypt(text.encode(),self.publicKey)
         return False

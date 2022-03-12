@@ -10,9 +10,10 @@ from datalad.interface.base import build_doc
 from datalad.support.param import Parameter
 from datalad.distribution.dataset import datasetmethod
 from datalad.interface.utils import eval_results
-from datalad.support.constraints import EnsureChoice
+from datalad.support.constraints import EnsureChoice,EnsureStr
 
 from datalad.interface.results import get_status_dict
+from datalad_helloworld.main import Main
 import logging
 lgr = logging.getLogger('datalad.helloworld.hello_cmd')
 
@@ -30,23 +31,10 @@ class HelloWorld(Interface):
 
     # parameters of the command, must be exhaustive
     _params_ = dict(
-        # name of the parameter, must match argument name
-        language=Parameter(
-            # cmdline argument definitions, incl aliases
-            args=("-l", "--language"),
-            # documentation
-            doc="""language to say "hello" in""",
-            # type checkers, constraint definition is automatically
-            # added to the docstring
-            constraints=EnsureChoice('en', 'de')),
-        zanguage=Parameter(
-            # cmdline argument definitions, incl aliases
-            args=("-z", "--zanguage"),
-            # documentation
-            doc="""language to say "hello" in""",
-            # type checkers, constraint definition is automatically
-            # added to the docstring
-            constraints=EnsureChoice('y', 'n')),
+        path=Parameter(
+            args=("-f","--filepath"),
+            doc="""Filepath is the correctly address to configuration file. Ex.: c:\..\..\_settings.json""",
+            constraints=EnsureStr()),
     )
 
     @staticmethod
@@ -56,22 +44,22 @@ class HelloWorld(Interface):
     @eval_results
     # signature must match parameter list above
     # additional generic arguments are added by decorators
-    def __call__(language='en',zanguage='y'):
-        if language:
-            msg = HelloWorldHello(language).get_ret()
-        else:
-            msg = ("unknown language: '%s'", language)
-
+    def __call__(path=None):
+        if path:
+            lgpd = LgpdExtension(path)
+            lgpd.run()
+            msg = lgpd.getmessage()
+        
         yield get_status_dict(
             # an action label must be defined, the command name make a good
             # default
-            action='demo',
+            action='lgpdextension',
             # most results will be about something associated with a dataset
             # (component), reported paths MUST be absolute
             path=abspath(curdir),
             # status labels are used to identify how a result will be reported
             # and can be used for filtering
-            status='ok' if language in ('en', 'de') else 'error',
+            status='ok' if path else 'error',
             # arbitrary result message, can be a str or tuple. in the latter
             # case string expansion with arguments is delayed until the
             # message actually needs to be rendered (analog to exception
@@ -88,4 +76,17 @@ class HelloWorldHello():
             msg = 'Tachchen!'
         else:
             msg = ("unknown language: '%s'", self.language)
+        return msg
+
+class LgpdExtension:
+    def __init__(self,path=None):
+        self.path = path
+        self.result = None
+    def run(self):
+        self.result = Main(self.path).run()
+    def getmessage(self):
+        if self.result:
+            msg = "Applied all changes"
+        else:
+            msg = self.result
         return msg

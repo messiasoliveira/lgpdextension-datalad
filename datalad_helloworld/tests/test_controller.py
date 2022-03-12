@@ -2,7 +2,7 @@ import unittest
 from datalad_helloworld.tests.crypto.rsa import TestRsa
 from datalad_helloworld.tests.runner.actions import TestActions
 from datalad_helloworld.tests.runner.operations import TestOperations
-from datalad_helloworld.tests.utils.dataframe import TestDataframe
+from datalad_helloworld.tests.utils.dataframe import TestDataframe as TestDataframeUtils
 from datalad_helloworld.tests.utils.folder import TestFolder 
 from datalad_helloworld.tests.writers.csv import TestCsv
 from datalad_helloworld.tests.writers.dataframe import TestDataframe
@@ -16,6 +16,7 @@ def create_suite():
     test_suite.addTest(TestOperations)
     test_suite.addTest(TestFolder)
     test_suite.addTest(TestParquet)
+    test_suite.addTest(TestDataframeUtils)
     return test_suite
 
 if __name__ == '__main__':

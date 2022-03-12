@@ -15,18 +15,16 @@ class TestDataframe(unittest.TestCase):
     def test_encrypt(self):
         rsa = Rsa()
         rsa.setpublickey()
-        print("pubKey: " + rsa.publickey + " priKey: " + rsa.privateKey)
-        df = pd.DataFrame(self.dataframe)
-        dfutils = Dataframe(df,rsa,self.colname)
-        dfutils.encrypt(self.colname)
-        name_crypto = dfutils.dataframe.get(self.colname).iloc[0]
+        df = pd.DataFrame(self.dataframe).head(1)
         name = df.get(self.colname).iloc[0]
-        self.assertNotEqual(name,name_crypto)
+        dfutils = Dataframe(df,rsa,self.colname)
+        dfutils.encrypt()
+        name_crypto = dfutils.dataframe.get(self.colname).iloc[0]
+        self.assertNotEqual(name,str(name_crypto))
     def test_decrypt(self):
         rsa = Rsa()
         rsa.setkeys()
-        print("pubKey: " + rsa.publickey + " priKey: " + rsa.privateKey)
-        df = pd.DataFrame(self.dataframe)
+        df = pd.DataFrame(self.dataframe).head(1)
         name = df.get(self.colname).iloc[0]
         dfutils = Dataframe(df,rsa,self.colname)
         dfutils.encrypt()
@@ -61,13 +59,13 @@ class TestDataframe(unittest.TestCase):
         self.assertTrue(type == np.float64)
     def test_tonumeric(self):
         df = pd.DataFrame(self.dataframe)
-        dfutils = Dataframe(df,None,self.colnameprice)
-        dfutils.toPrice()
-        type = dfutils.dataframe.get(self.colnameprice).dtypes
+        dfutils = Dataframe(df,None,self.colnamenum)
+        dfutils.toNumeric()
+        type = dfutils.dataframe.get(self.colnamenum).dtypes
         self.assertTrue(type == np.int64)
     def test_toprice(self):
         df = pd.DataFrame(self.dataframe)
-        dfutils = Dataframe(df,None,self.colnamenum)
+        dfutils = Dataframe(df,None,self.colnameprice)
         dfutils.toPrice("US")
         type = dfutils.dataframe.get(self.colnameprice).dtypes
         self.assertTrue(type == np.object0)
@@ -76,7 +74,7 @@ class TestDataframe(unittest.TestCase):
         dfutils = Dataframe(df,None,self.colnameborn)
         dfutils.toDate("%Y-%m-%d")
         type = dfutils.dataframe.get(self.colnameborn).dtypes
-        self.assertTrue(type == np.datetime64)
+        self.assertTrue(type == np.dtype('datetime64[ns]'))
     def test_tostring(self):
         df = pd.DataFrame(self.dataframe)
         dfutils = Dataframe(df,None,self.colnamenum)

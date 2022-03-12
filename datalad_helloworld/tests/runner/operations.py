@@ -12,9 +12,9 @@ class TestOperations(unittest.TestCase):
         df = pd.DataFrame(self.dataframe)
         dataframe = Dataframe(df,None,"Name")
         res = Operations(dataframe).run(self.operations)
-        self.assertTrue(res)
+        self.assertIsNone(res)
     def test_select(self):
         df = pd.DataFrame(self.dataframe)
         dataframe = Dataframe(df,None,"Name")
         res = Operations(dataframe).select("upper",self.operations["upper"])
-        self.assertTrue(res)
+        self.assertIsNone(res)

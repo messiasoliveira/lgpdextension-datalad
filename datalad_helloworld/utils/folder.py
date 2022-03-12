@@ -25,3 +25,6 @@ class Folder:
         output = json.dumps(settings, indent = 4)
         with open(self.path, "w") as file:
             file.write(output)
+        return True
+    def exists(self):
+        return os.path.exists(self.path)
