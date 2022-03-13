@@ -24,8 +24,6 @@ class Actions:
             self.anonymation()
     def execute(self,rsa):
         lgr.info("execute to " + str(rsa))
-        print("PUBLICKEY :: " + str(rsa.publickey))
-        print("PRIVATEKEY :: " + str(rsa.privatekey))
         dfobj = dfoperations(self.dataframe,rsa,self.colname)
         opobj = Operations(dfobj)
         opobj.run(self.colsettings["operations"])
