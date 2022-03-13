@@ -14,7 +14,7 @@ class Rsa:
             self.setkeys()
         elif settings.get("publicKey",None) and settings.get("privateKey",None):
             pub = settings["publicKey"]
-            pri = settings["private"]
+            pri = settings["privateKey"]
             self.publicKey = rsa.PublicKey(pub["n"],pub["e"])
             self.privateKey = rsa.PrivateKey(pri["n"],pri["e"],pri["d"],pri["p"],pri["q"])
         settings = self.updatefile(settings,"publicKey",{"n":self.publicKey.n,"e":self.publicKey.e})

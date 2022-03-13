@@ -23,7 +23,7 @@
         "separator": "",
         "names": [],
         "header": "0 | None",
-        "path": "c:\\Users\\messi\\repository\\bkpextension_datalad/datalad_helloworld/tests/resources/test_exists.parquet"
+        "path": "c:\\Users\\messi\\repository\\bkpextension_datalad/datalad_helloworld/tests/resources/test_ofuscation.parquet"
     },
     "columns": {
         "Name": {

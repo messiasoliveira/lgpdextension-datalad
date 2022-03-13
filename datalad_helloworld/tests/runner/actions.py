@@ -14,6 +14,7 @@ class TestActions(unittest.TestCase):
         dfa = pd.DataFrame(self.df)
         path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/test_tokenization.parquet"
         self.settings["file"]["path"] = path
+        self.filepath = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/settings_base_tokenization.json"
         act = Actions("Name",self.settings,dfa,self.filepath)
         act.tokenization()
         res = act.dataframe
@@ -22,6 +23,7 @@ class TestActions(unittest.TestCase):
         dfa = pd.DataFrame(self.df)
         path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/test_ofuscation.parquet"
         self.settings["file"]["path"] = path
+        self.filepath = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/settings_base_ofuscation.json"
         act = Actions("DateBorn",self.settings,dfa,self.filepath)
         act.ofuscation()
         res = act.dataframe
@@ -30,6 +32,7 @@ class TestActions(unittest.TestCase):
         dfa = pd.DataFrame(self.df)
         path = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/test_anonymation.parquet"
         self.settings["file"]["path"] = path
+        self.filepath = f"{Folder().getcurrent()}/datalad_helloworld/tests/resources/settings_base_anonymation.json"
         act = Actions("Age",self.settings,dfa,self.filepath)
         act.anonymation()
         res = act.dataframe

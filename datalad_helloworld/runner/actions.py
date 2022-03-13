@@ -16,19 +16,19 @@ class Actions:
         self.filepath = filepath
     def run(self, action):
         lgr.info("run to " + str(action))
-        switch = {
-            "tokenization":self.tokenization(),
-            "ofuscation":self.ofuscation(),
-            "anonymation":self.anonymation()
-        }
-        switch.get(action,None)
+        if action == "tokenization":
+            self.tokenization()
+        elif action == "ofuscation":
+            self.ofuscation()
+        elif action == "anonymation":
+            self.anonymation()
     def execute(self,rsa):
         lgr.info("execute to " + str(rsa))
         print("PUBLICKEY :: " + str(rsa.publickey))
         print("PRIVATEKEY :: " + str(rsa.privatekey))
         dfobj = dfoperations(self.dataframe,rsa,self.colname)
         opobj = Operations(dfobj)
-        opobj.run(self.settings["columns"][self.colname]["operations"])
+        opobj.run(self.colsettings["operations"])
         dfutils().write(opobj.dataframe.dataframe,self.settings)
         Folder(self.filepath).save(self.settings)
     def tokenization(self):

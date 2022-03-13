@@ -14,22 +14,22 @@ class Main:
     def update_file(self,settings):
         defauld_field = "Added the '{{FIELD}} field'. YOU NEED TO CONFIGURE THE '{{FIELD}} FIELD' FROM SETTINGS JSON."
         msgs = ""
-        if settings.get("ofuscation",None):
+        if not settings.get("ofuscation",None):
             msg = defauld_field.replace("{{FIELD}}","OFUSCATION")
             msgs += "\n" + msg
             lgr.info(msg)
             settings["ofuscation"] = GenerateConfig().addExampleOfuscation()
-        if settings.get("tokenization",None):
+        if not settings.get("tokenization",None):
             msg = defauld_field.replace("{{FIELD}}","TOKENIZATION")
             msgs = "\n" + msg
             lgr.info(msg)
             settings["tokenization"] = GenerateConfig().addExampleTokenization()
-        if settings.get("file",None):
+        if not settings.get("file",None):
             msg = defauld_field.replace("{{FIELD}}","FILE")
             msgs += "\n"
             lgr.info(msg)
             settings["file"] = GenerateConfig().addExampleFile()
-        if settings.get("columns",None):
+        if not settings.get("columns",None):
             msg = defauld_field.replace("{{FIELD}}","COLUMNS")
             msgs += "\n" + msg
             lgr.info(msg)
@@ -44,8 +44,8 @@ class Main:
         else:
             fld = Folder(self.filename)
             settings = self.update_file(fld.read())
-        dataframe = dfutils.read(settings)
+        dataframe = dfutils().read(settings)
         for colname,value in settings["columns"].items():
             if value.get("enable",None) == "true":
-                Actions(colname,dataframe,settings,self.filename).run(settings["actions"])
+                Actions(colname,settings,dataframe,self.filename).run(value["actions"])
         return True

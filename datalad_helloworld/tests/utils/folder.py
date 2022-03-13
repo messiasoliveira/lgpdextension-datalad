@@ -21,3 +21,7 @@ class TestFolder(unittest.TestCase):
         content = fld.read()
         res = fld.save(content)
         self.assertTrue(res == True)
+    def test_exists(self):
+        fld = Folder(self.path)
+        res = fld.exists()
+        self.assertTrue(res == True)

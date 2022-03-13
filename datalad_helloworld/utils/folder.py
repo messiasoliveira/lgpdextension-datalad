@@ -1,5 +1,6 @@
 import os
 import sys
+import shutil
 import json
 import logging
 
@@ -28,3 +29,5 @@ class Folder:
         return True
     def exists(self):
         return os.path.exists(self.path)
+    def copy(self,sourcepath,destpath):
+        shutil.copyfile(sourcepath,destpath)
