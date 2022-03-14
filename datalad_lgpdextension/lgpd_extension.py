@@ -10,7 +10,7 @@ from datalad.interface.base import build_doc
 from datalad.support.param import Parameter
 from datalad.distribution.dataset import datasetmethod
 from datalad.interface.utils import eval_results
-from datalad.support.constraints import EnsureChoice,EnsureStr
+from datalad.support.constraints import EnsureStr,EnsureBool
 
 from datalad.interface.results import get_status_dict
 from pkg_resources import ensure_directory
@@ -36,6 +36,10 @@ class LgpdExtension(Interface):
             args=("-p","--pathfile"),
             doc="""Filepath is the correctly address to configuration file. Ex.: c:\..\..\_settings.json""",
             constraints=EnsureStr(0)),
+        createbase=Parameter(
+            args=("-c","--createbase"),
+            doc="""Create a example configuration file.""",
+            constraints=EnsureBool()),
     )
 
     @staticmethod
@@ -45,12 +49,11 @@ class LgpdExtension(Interface):
     @eval_results
     # signature must match parameter list above
     # additional generic arguments are added by decorators
-    def __call__(pathfile):
-        if pathfile:
-            lgpd = Extension(pathfile)
-            lgpd.run()
-            msg = lgpd.getmessage()
-        
+    def __call__(pathfile="",createbase=False):
+        lgpd = Extension(createbase=createbase,pathfile=pathfile)
+        lgpd.run()
+        msg = lgpd.getmessage()
+            
         yield get_status_dict(
             # an action label must be defined, the command name make a good
             # default
@@ -60,7 +63,7 @@ class LgpdExtension(Interface):
             path=abspath(curdir),
             # status labels are used to identify how a result will be reported
             # and can be used for filtering
-            status='ok' if pathfile else 'error',
+            status='ok' if pathfile or createbase else 'error',
             # arbitrary result message, can be a str or tuple. in the latter
             # case string expansion with arguments is delayed until the
             # message actually needs to be rendered (analog to exception
@@ -68,14 +71,19 @@ class LgpdExtension(Interface):
             message=msg)
 
 class Extension:
-    def __init__(self,pathfile=None):
-        self.path = pathfile
-        self.result = None
+    def __init__(self,createbase,pathfile):
+        self.pathfile = pathfile
+        self.createbase = createbase
+        self.result = 1
     def run(self):
-        self.result = Main(self.path).run()
+        self.result = Main(self.createbase,self.pathfile).run()
     def getmessage(self):
-        if self.result:
+        if self.result == 0:
             msg = "Applied all changes"
+        elif self.result == 4:
+            msg = "Created configuration file"
+        elif self.result == 1:
+            msg = "This extension needs to specific path to get configuration"
         else:
-            msg = self.result
+            msg = "Undefined error"
         return msg

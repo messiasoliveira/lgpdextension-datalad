@@ -9,8 +9,9 @@ from datalad_lgpdextension.utils.folder import Folder
 lgr = logging.getLogger('datalad.lgpdextension.lgpd_extension.writers.dataframe')
 
 class Main:
-    def __init__(self,filename=f"{Folder().getcurrent()}/_settings.json"):
+    def __init__(self,createfile,filename=""):
         self.filename = filename
+        self.createfile = createfile
     def update_file(self,settings):
         defauld_field = "Added the '{{FIELD}} field'. YOU NEED TO CONFIGURE THE '{{FIELD}} FIELD' FROM SETTINGS JSON."
         msgs = ""
@@ -35,12 +36,15 @@ class Main:
             lgr.info(msg)
             settings["columns"] = GenerateConfig().addExampleColumn()
         Folder(self.filename).save(settings)
-        if msgs != "":
-            raise Exception(msgs)
         return settings
     def run(self):
-        if not Folder(self.filename).exists():
-            settings = self.update_file(dict())
+        if self.createfile:
+            if not self.filename:
+                self.filename = f"{Folder().getcurrent()}/_settings.json"
+            self.update_file(dict())
+            return 4
+        elif not Folder(self.filename).exists():
+            return 1
         else:
             fld = Folder(self.filename)
             settings = self.update_file(fld.read())
@@ -48,4 +52,4 @@ class Main:
         for colname,value in settings["columns"].items():
             if value.get("enable",None) == "true":
                 Actions(colname,settings,dataframe,self.filename).run(value["actions"])
-        return True
+        return 0

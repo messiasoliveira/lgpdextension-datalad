@@ -8,18 +8,22 @@ for implementing a [DataLad](http://datalad.org) extension. An extension can
 provide any number of additional DataLad commands that are automatically
 included in DataLad's command line and Python API.
 
-For a demo, clone this repository and install the demo extension via
+For a version, clone this repository and install the demo extension via
 
-    pip install -e .
+    pip install -e . or pip install lgpdextension-datalad
 
 DataLad will now expose a new command suite with a `hello...` command.
 
     % datalad --help |grep -B2 -A2 hello
-    *Demo DataLad command suite*
+    *DataLad command suite*
 
       lgpd-extension
-          Short description of the command
+          Apply lgpd patterns
 
+        -p | --pathfile
+          Full address to configuration file
+        -c | --configbase
+          Create the default configuration file
 To start implementing your own extension, [use this
 template](https://github.com/datalad/datalad-extension-template/generate), and
 adjust as necessary. A good approach is to
