@@ -22,7 +22,7 @@
         "format": "parquet",
         "separator": "",
         "names": [],
-        "header": "0 | None",
+        "header": "None",
         "path": "c:\\Users\\messi\\repository\\lgpdextension-datalad/datalad_lgpdextension/tests/resources/test_tokenization.parquet"
     },
     "columns": {

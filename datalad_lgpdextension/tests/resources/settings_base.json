@@ -23,7 +23,7 @@
         "separator": "",
         "names": [],
         "header": "None",
-        "path": "C:\\Users\\messi\\repository\\lgpdextension-datalad\\datalad_lgpdextension\\tests\\resources\\test_exists.parquet"
+        "path": ".\\datalad_lgpdextension\\tests\\resources\\test_exists.parquet"
     },
     "columns": {
         "Name": {
