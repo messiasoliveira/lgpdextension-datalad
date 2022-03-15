@@ -14,25 +14,20 @@ class Main:
         self.createfile = createfile
     def update_file(self,settings):
         defauld_field = "Added the '{{FIELD}} field'. YOU NEED TO CONFIGURE THE '{{FIELD}} FIELD' FROM SETTINGS JSON."
-        msgs = ""
         if not settings.get("ofuscation",None):
             msg = defauld_field.replace("{{FIELD}}","OFUSCATION")
-            msgs += "\n" + msg
             lgr.info(msg)
             settings["ofuscation"] = GenerateConfig().addExampleOfuscation()
         if not settings.get("tokenization",None):
             msg = defauld_field.replace("{{FIELD}}","TOKENIZATION")
-            msgs = "\n" + msg
             lgr.info(msg)
             settings["tokenization"] = GenerateConfig().addExampleTokenization()
         if not settings.get("file",None):
             msg = defauld_field.replace("{{FIELD}}","FILE")
-            msgs += "\n"
             lgr.info(msg)
             settings["file"] = GenerateConfig().addExampleFile()
         if not settings.get("columns",None):
             msg = defauld_field.replace("{{FIELD}}","COLUMNS")
-            msgs += "\n" + msg
             lgr.info(msg)
             settings["columns"] = GenerateConfig().addExampleColumn()
         Folder(self.filename).save(settings)

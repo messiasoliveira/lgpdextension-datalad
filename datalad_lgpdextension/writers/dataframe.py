@@ -7,7 +7,7 @@ lgr = logging.getLogger('datalad.lgpdextension.lgpd_extension.writers.dataframe'
 
 class Dataframe:
     def read(self, settings):
-        lgr.info("Reading path to " + str(settings.get("format",'None')))
+        lgr.info("Reading path to " + str(settings["file"].get("format",'None')))
         if settings["file"].get("format",None) == "csv":
             return Csv(settings["file"]).read()
         elif settings["file"].get("format",None) == "parquet":
