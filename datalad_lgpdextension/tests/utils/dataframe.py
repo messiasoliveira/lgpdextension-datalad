@@ -63,10 +63,10 @@ class TestDataframe(unittest.TestCase):
         dfutils.toNumeric()
         type = dfutils.dataframe.get(self.colnamenum).dtypes
         self.assertTrue(type == np.int64)
-    def test_toprice(self):
+    def test_toformatfloat(self):
         df = pd.DataFrame(self.dataframe)
         dfutils = Dataframe(df,None,self.colnameprice)
-        dfutils.toPrice("US")
+        dfutils.toFormatFloat("US")
         type = dfutils.dataframe.get(self.colnameprice).dtypes
         self.assertTrue(type == np.object0)
     def test_todate(self):

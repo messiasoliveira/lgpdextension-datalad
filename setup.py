@@ -13,7 +13,7 @@ cmdclass.update(build_manpage=BuildManPage)
 if __name__ == '__main__':
     setup(name='datalad-lgpdextension',
         packages = (find_packages()),
-        version='0.1.1',
+        version='0.5.0',
         description = 'Datalad extension to apply lgpd patterns',
         author = 'Messias Silva',
         author_email = 'messias.oliveira2011@hotmail.com',

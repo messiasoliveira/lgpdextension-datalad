@@ -23,8 +23,8 @@ class Operations:
             self.dataframe.toFloat(),
         elif operation == "toNumeric":
             self.dataframe.toNumeric(),
-        elif operation == "toPrice":
-            self.dataframe.toPrice(value),
+        elif operation == "toFormatFloat":
+            self.dataframe.toFormatFloat(value),
         elif operation == "toDate":
             self.dataframe.toDate(value),
         elif operation == "json":

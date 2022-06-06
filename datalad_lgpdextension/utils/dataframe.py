@@ -32,8 +32,8 @@ class Dataframe:
     def toNumeric(self):
         lgr.info("toNumeric to " + self.colname)
         self.dataframe[self.colname] = pd.to_numeric(self.dataframe[self.colname])
-    def toPrice(self,value):
-        lgr.info("toPrice to " + self.colname + " - format to " + value)
+    def toFormatFloat(self,value):
+        lgr.info("toFormatFloat to " + self.colname + " - format to " + value)
         self.dataframe[self.colname] = self.dataframe[self.colname].map(self.price_format.get(value,value).format)
     def toDate(self,value):
         lgr.info("toDate to " + self.colname + " - format to " + value)
