@@ -34,7 +34,9 @@ class Operations:
         elif operation == "encrypt":
             self.dataframe.encrypt()
         elif operation == "decrypt":
-            self.dataframe.decrypt() 
+            self.dataframe.decrypt()
+        elif operation == "toString":
+            self.dataframe.toString()
     @property
     def dataframe(self):
         return self.dataframe
