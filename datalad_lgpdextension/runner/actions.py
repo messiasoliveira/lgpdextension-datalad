@@ -20,8 +20,8 @@ class Actions:
             self.tokenization()
         elif action == "ofuscation":
             self.ofuscation()
-        elif action == "anonymation":
-            self.anonymation()
+        elif action == "anonymization":
+            self.anonymization()
     def execute(self,rsa):
         lgr.info("execute to " + str(rsa))
         dfobj = dfoperations(self.dataframe,rsa,self.colname)
@@ -39,8 +39,8 @@ class Actions:
         rsa = Rsa()
         self.settings["ofuscation"] = rsa.ofuscation(self.settings.get("ofuscation",{}))
         self.execute(rsa)
-    def anonymation(self):
-        lgr.info("anonymation action")
+    def anonymization(self):
+        lgr.info("anonymization action")
         dfobj = dfoperations(self.dataframe,None,self.colname)
         opobj = Operations(dfobj)
         opobj.run(self.colsettings["operations"])

@@ -13,7 +13,7 @@ class GenerateConfig:
         settings = {}
         column = {}
         column["enable"] = "true | false"
-        column["actions"] = "tokenization | ofuscation | anonymation"
+        column["actions"] = "tokenization | ofuscation | anonymization"
         column["operations"] = {
             "upper | lower | toInt | toFloat | toNumeric | toPrice | toDate | rangeNumeric | encrypt | decrypt": "'toPrice'->('BR'='{:.,2f}' | 'US'='{:,.2f}' | ANY) | 'toDate'->('BR'='%d/%m/%y' | 'US'='%m/%d/%y' | 'CN'='%y/%m/%d' | ANY) | 'json'->{'masculino':0,'feminino':1} | 'rangeNumeric'->{'0-2':0,'3-5':1}"
         }

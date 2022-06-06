@@ -22,7 +22,7 @@ DataLad will now expose a new command suite with a `hello...` command.
 
         -p | --pathfile
           Full address to configuration file
-        -c | --configbase
+        -c | --createbase
           Create the default configuration file
 To start implementing your own extension, [use this
 template](https://github.com/datalad/datalad-extension-template/generate), and

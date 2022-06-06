@@ -28,12 +28,12 @@ class TestActions(unittest.TestCase):
         act.ofuscation()
         res = act.dataframe
         self.assertTrue(isinstance(res,pd.DataFrame))
-    def test_anonymation(self):
+    def test_anonymization(self):
         dfa = pd.DataFrame(self.df)
-        path = f"{Folder().getcurrent()}/datalad_lgpdextension/tests/resources/test_anonymation.parquet"
+        path = f"{Folder().getcurrent()}/datalad_lgpdextension/tests/resources/test_anonymization.parquet"
         self.settings["file"]["path"] = path
-        self.filepath = f"{Folder().getcurrent()}/datalad_lgpdextension/tests/resources/settings_base_anonymation.json"
+        self.filepath = f"{Folder().getcurrent()}/datalad_lgpdextension/tests/resources/settings_base_anonymization.json"
         act = Actions("Age",self.settings,dfa,self.filepath)
-        act.anonymation()
+        act.anonymization()
         res = act.dataframe
         self.assertTrue(isinstance(res,pd.DataFrame))
