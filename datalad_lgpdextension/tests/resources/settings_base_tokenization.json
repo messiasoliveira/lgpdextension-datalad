@@ -36,7 +36,7 @@
         },
         "Age": {
             "enable": "true",
-            "actions": "anonymation",
+            "actions": "anonymization",
             "operations": {
                 "toInt": "true",
                 "rangeNumeric": {
@@ -49,7 +49,7 @@
         },
         "Gender": {
             "enable": "false",
-            "actions": "anonymation",
+            "actions": "anonymization",
             "operations": {
                 "lower": "true",
                 "json": {
@@ -61,7 +61,7 @@
         },
         "Price": {
             "enable": "true",
-            "actions": "anonymation",
+            "actions": "anonymization",
             "operations": {
                 "toFloat": "true",
                 "toPrice": "US"
@@ -76,7 +76,7 @@
         },
         "CreatedDate": {
             "enable": "false",
-            "actions": "anonymation",
+            "actions": "anonymization",
             "operations": {
                 "toDatetime": "false"
             }
